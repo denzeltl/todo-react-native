@@ -11,7 +11,7 @@ const TaskItem = ({ item, toggleCompleted, deleteTask }) => {
                 <Text style={[styles.taskText, item.completed ? styles.taskCompletedText : styles.taskNotCompletedText]}>{item.task}</Text>
             </TouchableOpacity>
             <View style={styles.buttons}>
-                <TouchableOpacity style={styles.edit}>
+                <TouchableOpacity style={styles.edit} onPress={() => Alert.prompt('Title', 'Delete this task?', (text) => console.log(text))}>
                     <Icon name="edit" size={20} color="#333" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => Alert.alert('Confirm', 'Delete this task?', [{ text: 'Cancel' }, { text: 'Yes', onPress: () => deleteTask(item.id) }])}>
