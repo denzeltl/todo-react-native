@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 
 const TaskItem = ({ item, toggleCompleted, deleteTask }) => {
     return (
-        <View key={item.id} style={styles.taskItem}>
+        <View style={styles.taskItem}>
             <TouchableOpacity style={styles.taskCheckbox} onPress={() => toggleCompleted(item.id)}>
                 <CheckBox checkedColor="#f63f3e" checked={item.completed} onPress={() => toggleCompleted(item.id)} />
                 <Text style={[styles.taskText, item.completed ? styles.taskCompletedText : styles.taskNotCompletedText]}>{item.task}</Text>
             </TouchableOpacity>
-            <View>
-                <TouchableOpacity onPress={() => deleteTask(item.id)}>
+            <View style={styles.buttons}>
+                <TouchableOpacity style={styles.edit}>
+                    <Icon name="edit" size={20} color="#333" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Alert.alert('Confirm', 'Delete this task?', [{ text: 'Cancel' }, { text: 'Yes', onPress: () => deleteTask(item.id) }])}>
                     <Icon name="trash" size={20} color="#333" />
                 </TouchableOpacity>
             </View>
@@ -20,6 +23,13 @@ const TaskItem = ({ item, toggleCompleted, deleteTask }) => {
 };
 
 const styles = StyleSheet.create({
+    buttons: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    edit: {
+        marginRight: 20,
+    },
     taskCheckbox: {
         flexDirection: 'row',
         alignItems: 'center',
